@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Home Sampling Portal</title>
+<style>
+:root{--bg:#f3f5fa;--cd:#fff;--tx:#14213d;--mu:#64708a;--nv:#0b2265;--bd:#d7dce8;--g:#4c7f2a;--r:#d92d20;--tr:#e6e9f1;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1424;--cd:#161d33;--tx:#e8ecf7;--mu:#9aa6c4;--nv:#1b2f7a;--bd:#2a3556;--g:#7fb356;--r:#ff6b5e;--tr:#2a3556}}
+:root[data-theme="dark"]{--bg:#0e1424;--cd:#161d33;--tx:#e8ecf7;--mu:#9aa6c4;--nv:#1b2f7a;--bd:#2a3556;--g:#7fb356;--r:#ff6b5e;--tr:#2a3556}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.4 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{background:var(--nv);color:#fff;padding:12px 16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+header h1{font-size:18px;margin:0 auto 0 0}header select,header button{font:inherit;padding:6px 10px;border-radius:8px;border:1px solid #fff5;background:#fff2;color:#fff}
+header option{color:#000}.tabs button.on{background:#fff;color:var(--nv);font-weight:700}
+main{padding:14px;max-width:1200px;margin:auto}section{display:none}section.on{display:block}
+h2{font-size:15px;margin:18px 0 8px;color:var(--nv)}@media(prefers-color-scheme:dark){h2{color:#aab8ff}}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0}.row select,.row input,.up input{font:inherit;padding:6px 8px;border:1px solid var(--bd);border-radius:8px;background:var(--cd);color:var(--tx)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.c{background:var(--cd);border:1px solid var(--bd);border-radius:12px;padding:10px;text-align:center;border-top:4px solid var(--g)}.c.bad{border-top-color:var(--r)}
+.c b{display:block;font-size:13px}.big{font-size:22px;font-weight:700;color:var(--g)}.bad .big{color:var(--r)}small{color:var(--mu)}
+svg{width:100%;height:auto;display:block}.rb{fill:none;stroke:var(--tr);stroke-width:11}.rv{fill:none;stroke-width:11;stroke-linecap:butt}.gt{font:700 17px system-ui;text-anchor:middle}
+.bl{font:10px system-ui;fill:var(--tx);text-anchor:middle}.ml{font:9px system-ui;fill:var(--mu);text-anchor:middle}
+table{border-collapse:collapse;width:100%;background:var(--cd)}td,th{border:1px solid var(--bd);padding:6px 8px;text-align:center}th{background:var(--nv);color:#fff}
+.wrap{overflow-x:auto}.up{background:var(--cd);border:1px solid var(--bd);border-radius:12px;padding:12px;margin:8px 0}.up label{display:block;margin:8px 0 3px;font-weight:600}
+.btn{background:var(--nv);color:#fff;border:0;border-radius:8px;padding:8px 14px;font:inherit;cursor:pointer}.msg{color:var(--mu);margin:8px 0}.err{color:var(--r)}
+td input{width:86px;text-align:center;font:inherit;padding:3px;border:1px solid var(--bd);border-radius:6px;background:var(--cd);color:var(--tx)}
+.ms{position:relative;display:inline-block}.ms summary{cursor:pointer;padding:6px 10px;border:1px solid var(--bd);border-radius:8px;background:var(--cd);list-style:none}.mb{position:absolute;z-index:4;background:var(--cd);border:1px solid var(--bd);border-radius:8px;padding:8px;max-height:280px;overflow:auto;min-width:180px;box-shadow:0 6px 18px #0003}.mb label{display:flex;gap:6px;align-items:center;padding:2px 0;white-space:nowrap}.mb .mt{display:flex;gap:6px;margin-bottom:4px}.mb .mt button{font:inherit;font-size:12px;padding:2px 8px;border:1px solid var(--bd);border-radius:6px;background:var(--cd);color:var(--tx);cursor:pointer}
+#fb{position:sticky;top:calc(var(--hh,56px) + env(safe-area-inset-top,0px));z-index:4;background:var(--cd);border-bottom:1px solid var(--bd);padding:6px 14px;display:none}#fb.on{display:block}.fg{display:inline-flex;flex-wrap:wrap;gap:6px;align-items:center;margin:3px 16px 3px 0}.fg>b{font-size:12px;color:var(--mu)}#fb select,#fb summary{font:inherit;font-size:13px;padding:5px 8px}#fb select{border:1px solid var(--bd);border-radius:8px;background:var(--cd);color:var(--tx)}#fb .btn{padding:5px 10px;font-size:13px}
+.mgs{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}.mg{width:92px}.mg .gt{font-size:16px}.w2{grid-column:span 2}.w3{grid-column:span 3}.lg{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;font-size:11px;margin:4px 0}.lg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:3px}@media(max-width:700px){.w2,.w3{grid-column:auto}}
+#tt{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:var(--nv);color:#fff;padding:9px 16px;border-radius:10px;display:none;z-index:9;max-width:92%;font-size:13px}
+.rh{background:var(--nv);color:#fff;padding:8px 14px;border-radius:8px;margin:24px 0 4px;font-size:16px}
+</style></head>
+<body>
+<header><h1>Home Sampling Portal</h1>
+<span class="tabs" id="nav"></span>
+</header>
+<div id="fb"></div><div id="tt"></div>
+<main>
+<div class="msg" id="st">Loading data…</div>
+<section id="s-dash"></section>
+<section id="s-up">
+ <div class="up"><h2 style="margin-top:0">Add a month</h2>
+ <div class="row"><label>Month</label><select id="uy"></select> <select id="umn"></select></div>
+ <label>KPI file (hs_kpis_trend…xlsx)</label><input type="file" id="f1" accept=".xlsx,.xls">
+ <label>Complaints file (Sheet1 with assignee names)</label><input type="file" id="f2" accept=".xlsx,.xls">
+ <label>Pre-analytical ticket file</label><input type="file" id="f3" accept=".xlsx,.xls">
+ <div class="row"><button class="btn" id="rd">Read files</button><span class="msg">Any one file can be uploaded on its own; the others stay as they were.</span></div></div>
+ <div id="pv"></div>
+</section>
+<section id="s-tb"></section>
+</main>
+<script src="lib/xlsx.full.min.js"></script>
+<script src="lib/jszip.min.js"></script>
+<script src="lib/pptxgen.bundle.js"></script>
+<script src="data.js"></script>
+<script>
+const MET=[["Efficiency",.85],["On Time",.90],["Online",.90],["Pin Accuracy",.98],["Hotspot",.85],["On-Site (25m)",.80],["POS",.30],["Auto Assignment",0],["Outsource",0]];
+const REG=["Lahore","South","Center","North","DHA"],GO=[0,1,2,4,3,8,5,6,7],BO=[0,1,2,3,7,6,4,5];
+const MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const lab=k=>k?MN[+k.slice(5)-1]+"-"+k.slice(2,4):"";
+const pc=v=>v==null?"–":(v*100).toFixed(1)+"%";
+const $=s=>document.querySelector(s);
+let DB={},S={tab:"dash",reg:"Lahore",bm:null,ca:null,cb:null,gm:null,gk:null,rk:null,gt:GO.map(String),rt:BO.map(String),vw:"c",cht:"b",cq:[],ct:BO.map(String),rr:REG.slice(),mm:BO.map(String),fo:true,rg:["Lahore"],op:{}},PEND=null,db=null;
+const allv=id=>({bm:keys(),gk:keys(),rk:keys(),ca:keys(),cb:keys(),cq:qy().map(q=>q.id),gt:GO.map(String),rr:REG.slice(),rg:REG.slice()}[id]||BO.map(String));
+const vis=()=>({ov:S.gk.length&&S.gt.length,mw:S.bm.length&&S.mm.length,cp:S.cq.length&&S.ct.length});
+const QD=[["Apr–Jun",[4,5,6]],["Jul–Sep",[7,8,9]],["Oct–Dec",[10,11,12]],["Jan–Mar",[1,2,3]]];
+const qy=()=>{const y=[...new Set(keys().map(k=>+k.slice(0,4)))];return QD.flatMap(([n,m])=>y.map(yy=>({id:n.slice(0,2)+"-"+yy,n:n+" "+String(yy).slice(2),ks:m.map(x=>yy+"-"+String(x).padStart(2,"0")).filter(k=>DB[k])}))).filter(q=>q.ks.length).sort((a,b)=>a.ks[0]<b.ks[0]?-1:1)};
+const qsel=id=>`<select data-q="${id}"><option value="">Select…</option>`+qy().map(q=>`<option value="${q.id}">${q.n}</option>`).join("")+"</select>";
+const gname=a=>{if(!a.length)return"–";const q=qy().find(q=>q.ks.length==a.length&&q.ks.every(k=>a.includes(k)));return q?q.n:(a.length<=3?a.map(lab).join("+"):lab(a[0])+"…"+lab(a[a.length-1]))};
+const ms=(id,t,items,sel)=>`<details class="ms" data-o="${id}"${S.op[id]?" open":""}><summary>${t} (${sel.length})</summary><div class="mb"><div class="mt"><button data-ma="${id}|all">All</button><button data-ma="${id}|none">None</button></div>`+items.map(([v,n])=>`<label><input type="checkbox" data-ms="${id}" value="${v}"${sel.includes(v)?" checked":""}>${n}</label>`).join("")+"</div></details>";
+const keys=()=>Object.keys(DB).sort();
+const val=(k,r,i)=>{const x=DB[k]&&DB[k].r&&DB[k].r[r]&&DB[k].r[r].k;return x&&x[i]!=null?x[i]:null};
+const avg=(ks,r,i)=>{const a=ks.map(k=>val(k,r,i)).filter(x=>x!=null);return a.length?a.reduce((s,x)=>s+x,0)/a.length:null};
+const opts=(sel,withBlank)=>(withBlank?'<option value="">—</option>':'')+keys().map(k=>`<option value="${k}"${k==sel?" selected":""}>${lab(k)}</option>`).join("");
+const dsel=(p,v)=>`<select data-k="${p}">${opts(v,1)}</select>`;
+function gauge(n,v,t){const c=v==null?"var(--tr)":v>=t?"var(--g)":"var(--r)",L=251.3;
+return `<div class="c${v!=null&&v<t?" bad":""}"><b>${n}</b><svg viewBox="0 0 100 100"><circle class="rb" cx="50" cy="50" r="40"/><circle class="rv" cx="50" cy="50" r="40" stroke="${c}" stroke-dasharray="${(L*(v||0)).toFixed(1)} ${L}" transform="rotate(-90 50 50)"/><text class="gt" x="50" y="56" fill="${c}">${pc(v)}</text></svg><small>Target ≥ ${t?Math.round(t*100)+"%":"–"}</small></div>`}
+function card(n,vals,labs,t,nh){const nn=vals.filter(x=>x!=null),last=nn.length?nn[nn.length-1]:null,mx=Math.max(...nn,t,.01)*1.15,W=Math.max(240,40+vals.length*36),w=(W-40)/vals.length,bw=Math.min(34,w*.7);
+let s=vals.map((v,i)=>{if(v==null)return`<text class="ml" x="${20+w*i+w/2}" y="112">${labs[i]}</text>`;const h=v/mx*74,x=20+w*i+(w-bw)/2,c=v>=t?"var(--g)":"var(--r)";
+return`<rect x="${x}" y="${96-h}" width="${bw}" height="${h}" fill="${c}" rx="2"/><text class="bl" x="${x+bw/2}" y="${92-h}">${pc(v)}</text><text class="ml" x="${x+bw/2}" y="109">${labs[i]}</text>`}).join("");
+return`<div class="c${!nh&&last!=null&&last<t?" bad":""}"><b>${n}</b>${nh?"":`<div class="big">${pc(last)}</div>`}<small>Target ≥ ${t?Math.round(t*100)+"%":"–"}</small><svg viewBox="0 0 ${W} 118">${s}</svg></div>`}
+const RC={Lahore:"#2f6fdb",South:"#e08a1e",Center:"#8e44ad",North:"#16a085",DHA:"#d6336c"};
+function ring(v,t,l){const c=v==null?"var(--tr)":v>=t?"var(--g)":"var(--r)",L=251.3;return`<div class="mg"><svg viewBox="0 0 100 100"><circle class="rb" cx="50" cy="50" r="40"/><circle class="rv" cx="50" cy="50" r="40" stroke="${c}" stroke-dasharray="${(L*(v||0)).toFixed(1)} ${L}" transform="rotate(-90 50 50)"/><text class="gt" x="50" y="56" fill="${c}">${pc(v)}</text></svg><small>${l}</small></div>`}
+function gcard(n,it,t){return`<div class="c${it.length>2?" w2":""}"><b>${n}</b><div class="mgs">${it.map(x=>ring(x.v,t,x.r)).join("")}</div><small>Target ≥ ${t?Math.round(t*100)+"%":"–"}</small></div>`}
+function mcard(n,labs,ser,t){if(ser.length==1)return card(n,ser[0].v,labs,t);
+const ns=ser.length,nl=labs.length,W=Math.max(240,40+nl*ns*26),gw=(W-40)/nl,bw=Math.min(28,gw*.85/ns),al=ser.flatMap(q=>q.v).filter(x=>x!=null),mx=Math.max(...al,t,.01)*1.15,ty=96-t/mx*74;
+let s=labs.map((lb,gi)=>ser.map((q,j)=>{const v=q.v[gi];if(v==null)return"";const h=v/mx*74,x=20+gi*gw+(gw-ns*bw)/2+j*bw;return`<rect x="${x}" y="${96-h}" width="${bw-1}" height="${h}" fill="${v>=t?"var(--g)":"var(--r)"}" rx="2"/><text class="bl" x="${x+bw/2}" y="${92-h}" style="font-size:7px;fill:${v>=t?"var(--g)":"var(--r)"}">${pc(v)}</text><text class="ml" x="${x+bw/2}" y="104" style="font-size:6px">${q.n.slice(0,3)}</text>`}).join("")+`<text class="ml" x="${20+gi*gw+gw/2}" y="117" style="font-size:10px">${lb}</text>`).join("");
+if(t)s+=`<line x1="14" x2="${W-14}" y1="${ty}" y2="${ty}" stroke="var(--mu)" stroke-dasharray="3 3"/>`;
+return`<div class="c${nl*ns>6?(nl*ns>14?" w3":" w2"):""}"><b>${n}</b><div class="lg">${ser.map(q=>`<span><b>${q.n.slice(0,3)}</b> = ${q.n}</span>`).join("")}</div><small>Target ≥ ${t?Math.round(t*100)+"%":"–"} (dashed line) · bar green = on target, red = below</small><svg viewBox="0 0 ${W} 124">${s}</svg></div>`}
+function lcard(n,labs,ser,t){const ns=ser.length,nl=labs.length,multi=ns>1,W=Math.max(240,60+nl*46)+(multi?50:0),al=ser.flatMap(q=>q.v).filter(x=>x!=null);if(!al.length)return mcard(n,labs,ser,t);
+let lo=Math.min(...al,t||1),hi=Math.max(...al,t||0);if(hi-lo<.02){lo-=.02;hi+=.02}const pd=(hi-lo)*.25;lo-=pd;hi+=pd;
+const X=i=>30+(W-(multi?110:60))*(nl==1?.5:i/(nl-1)),Y=v=>100-(v-lo)/(hi-lo)*76,sv=ser[0].v.filter(x=>x!=null),last=sv.length?sv[sv.length-1]:null;let s="";
+if(t)s+=`<line x1="20" x2="${W-20}" y1="${Y(t)}" y2="${Y(t)}" stroke="var(--mu)" stroke-dasharray="3 3"/>`;
+ser.forEach(q=>{const c=multi?RC[q.n]:"var(--mu)",d=q.v.map((v,i)=>v==null?null:X(i)+","+Y(v)).filter(Boolean).join(" ");s+=`<polyline points="${d}" fill="none" stroke="${c}" stroke-width="1.6"/>`;
+q.v.forEach((v,i)=>{if(v==null)return;const g=v>=t;s+=`<circle cx="${X(i)}" cy="${Y(v)}" r="3.2" style="fill:${g?"var(--g)":"var(--r)"}"><title>${q.n} ${labs[i]} ${pc(v)}</title></circle>`+(multi?"":`<text class="bl" x="${X(i)}" y="${Y(v)-6}" style="font-size:7px;fill:${g?"var(--g)":"var(--r)"}">${pc(v)}</text>`)})});if(multi){let ends=ser.map(q=>{let k=q.v.length-1;while(k>=0&&q.v[k]==null)k--;return k<0?null:{q,k,y:Y(q.v[k])}}).filter(Boolean).sort((a,b)=>a.y-b.y);for(let j=1;j<ends.length;j++)if(ends[j].y-ends[j-1].y<8)ends[j].y=ends[j-1].y+8;ends.forEach(e=>{s+=`<text class="bl" x="${X(e.k)+8}" y="${e.y+3}" style="font-size:7px;text-anchor:start;fill:${RC[e.q.n]}">${e.q.n.slice(0,3)} ${pc(e.q.v[e.k])}</text>`})}
+s+=labs.map((l,i)=>`<text class="ml" x="${X(i)}" y="117" style="font-size:9px">${l}</text>`).join("");
+return`<div class="c${nl>5?" w2":""}${!multi&&last!=null&&last<t?" bad":""}"><b>${n}</b>${multi?`<div class="lg">${ser.map(q=>`<span><i style="background:${RC[q.n]}"></i>${q.n}</span>`).join("")}</div>`:`<div class="big">${pc(last)}</div>`}<small>Target ≥ ${t?Math.round(t*100)+"%":"–"} (dashed line) · point green = on target, red = below · end labels show the last month (hover a point for its value)</small><svg viewBox="0 0 ${W} 124">${s}</svg></div>`}
+function dash(){const K=keys();if(!K.length){$("#s-dash").innerHTML='<p class="msg">No data yet. Use the Upload tab to add a month.</p>';return}
+if(!S.gm){S.gm=K[K.length-1];S.bm=[];S.cb=[];S.ca=[];S.gk=[S.gm];S.rk=[]}
+const bm=S.bm.filter(Boolean).sort(),ca=S.ca.filter(Boolean).sort(),cb=S.cb.filter(Boolean).sort(),BF=BO.filter(i=>S.mm.includes(String(i))),CF=BO.filter(i=>S.ct.includes(String(i))),V=vis();
+const gk=S.gk.filter(Boolean).sort();let h=`<div class="row"><button class="btn" data-ppt="one">Create PPT</button><span class="msg">Selected regions, only the sections you have filtered, plus data tables.</span></div>`;const RS0=REG.filter(g=>S.rg.includes(g));const secs=RS=>{let h="";if(V.ov&&RS.length)h+=`<h2>Overall (gauges)</h2><p class="msg">Regions: ${RS.join(", ")||"–"}</p><div class="grid">`+GO.filter(i=>S.gt.includes(String(i))).map(i=>RS.length==1?gauge(MET[i][0],avg(gk,RS[0],i),MET[i][1]):gcard(MET[i][0],RS.map(r=>({r,v:avg(gk,r,i)})),MET[i][1])).join("")+`</div><p class="msg">${gk.length>1?"Average of "+gk.map(lab).join(", "):""}</p>`;
+if(V.mw&&RS.length)h+=`<h2>Month-wise</h2><div class="grid">`+BF.map(i=>(S.cht=="l"?lcard:mcard)(MET[i][0],bm.map(lab),RS.map(r=>({n:r,v:bm.map(k=>val(k,r,i))})),MET[i][1])).join("")+"</div>";
+const QS=qy().filter(q=>S.cq.includes(q.id));
+if(V.cp&&RS.length)h+=`<h2>Compare averages (quarter-wise)</h2><div class="grid">`+CF.map(i=>(S.cht=="l"?lcard:mcard)(MET[i][0],QS.map(q=>q.n),RS.map(r=>({n:r,v:QS.map(q=>avg(q.ks,r,i))})),MET[i][1])).join("")+`</div><p class="msg">Each bar = simple average of the months in that period: ${QS.map(q=>q.n+" ("+q.ks.map(lab).join(", ")+")").join(" · ")}</p>`;
+return h};
+if(!RS0.length)h+='<p class="msg">Select at least one region in the top bar.</p>';else if(!(V.ov||V.mw||V.cp))h+='<p class="msg">Oopar filter bar mein months aur metrics chunen. Jo chunenge sirf wohi yahan dikhega.</p>';else if(S.vw=="r")RS0.forEach(r=>{h+=`<h2 class="rh">${r}</h2>`+secs([r])});else h+=secs(RS0);$("#s-dash").innerHTML=h}
+function tbl(){const K=keys();let a="",b="",e="",et={};
+K.forEach(k=>{const d=DB[k].r&&DB[k].r.Lahore||{};const row=(c)=>{const n=d.n,ok=n&&c!=null;return`<tr><td>${lab(k)}</td><td><input type="number" value="${n==null?"":n}" data-n="${k}" placeholder="NOP"></td><td>${c==null?"–":c}</td><td>${ok?Math.floor(n/c):"–"}</td></tr>`};
+if(d.t!=null)a+=row(d.t);if(d.p!=null)b+=row(d.p);if(DB[k].e)Object.keys(DB[k].e).forEach(x=>et[x]=1)});
+const T=(t,c,x)=>`<h2>${t}</h2><div class="wrap"><table><tr><th>Month</th><th>NOP</th><th>${c}</th><th>Ratio (1 : x)</th></tr>${x}</table></div>`;
+const ets=Object.keys(et);
+e=`<h2>Pre-analytical error types</h2><div class="wrap"><table><tr><th>Month</th>${ets.map(x=>`<th>${x}</th>`).join("")}</tr>`+K.filter(k=>DB[k].e).map(k=>`<tr><td>${lab(k)}</td>${ets.map(x=>`<td>${DB[k].e[x]||0}</td>`).join("")}</tr>`).join("")+"</table></div>";
+$("#s-tb").innerHTML=T("Non-technical complaints (Lahore)","Complaints",a)+T("Pre-analytical errors (Lahore)","Error count",b)+e+`<div class="row"><button class="btn" id="csv">Download all data (CSV)</button><button class="btn" id="exp">Download data.js (for GitHub)</button><button class="btn" id="clr">Clear my local changes</button></div><p class="msg">New months you add are saved in THIS browser only. To make them visible to everyone: download data.js and replace it in your GitHub repository.</p><p class="msg">NOP is typed in once per month; ratio updates automatically.</p>`}
+function fbar(){const f=$("#fb"),on=S.tab=="dash"&&keys().length>0;f.classList.toggle("on",on);if(!on)return;const K=keys().map(k=>[k,lab(k)]),BM=BO.map(i=>[String(i),MET[i][0]]),g=(t,x)=>`<span class="fg"><b>${t}</b>${x}</span>`;
+f.innerHTML=g("Region",ms("rg","Regions",REG.map(x=>[x,x]),S.rg))+g("View",`<select data-vw="1"><option value="c"${S.vw=="r"?"":" selected"}>Combined</option><option value="r"${S.vw=="r"?" selected":""}>One block per region</option></select>`)+g("Chart",`<select data-cht="1"><option value="b"${S.cht=="l"?"":" selected"}>Bars</option><option value="l"${S.cht=="l"?" selected":""}>Lines</option></select>`)+`<button class="btn" data-fo="1">Filters ${S.fo?"▲":"▼"}</button> `+(S.fo?g("Overall",ms("gk","Months",K,S.gk)+ms("gt","Metrics",GO.map(i=>[String(i),MET[i][0]]),S.gt))+g("Month-wise",ms("bm","Months",K,S.bm)+ms("mm","Metrics",BM,S.mm))+g("Compare",ms("cq","Quarters",qy().map(q=>[q.id,q.n]),S.cq)+ms("ct","Metrics",BM,S.ct)):"")}
+function R(){$("#nav").innerHTML=[["dash","Dashboard"],["up","Upload"],["tb","Tables"]].map(([k,t])=>`<button data-t="${k}" class="${S.tab==k?"on":""}">${t}</button>`).join("");
+["dash","up","tb"].forEach(k=>$("#s-"+k).classList.toggle("on",S.tab==k));
+if(S.tab=="dash")dash();if(S.tab=="tb")tbl();fbar();document.documentElement.style.setProperty("--hh",document.querySelector("header").offsetHeight+"px")}
+document.addEventListener("click",e=>{const t=e.target.closest("[data-t]");if(t){S.tab=t.dataset.t;R()}
+if(e.target.dataset.fo){S.fo=!S.fo;R()}
+if(e.target.id=="csv")csv();if(e.target.id=="exp")dlfile("data.js","window.HS_DATA="+JSON.stringify({updated:new Date().toISOString(),docs:DB})+";\n","text/javascript");if(e.target.id=="clr"&&confirm("Remove all changes saved in this browser?")){EDITS={};persist();mergeDB();R()};if(e.target.dataset.ppt)mkppt(e.target.dataset.ppt);const a=e.target.dataset.ma;if(a){const[id,m]=a.split("|");S[id]=m=="all"?allv(id):[];R()}});
+document.addEventListener("toggle",e=>{const o=e.target.dataset&&e.target.dataset.o;if(o)S.op[o]=e.target.open},true);
+
+document.addEventListener("change",async e=>{const t=e.target;
+if(t.dataset.cht){S.cht=t.value;R();return}
+if(t.dataset.vw){S.vw=t.value;R();return}
+if(t.dataset.reg){S.reg=t.value;R();return}
+if(t.dataset.q){const q=qy().find(x=>x.id==t.value);if(q)S[t.dataset.q]=q.ks;R();return}
+if(t.dataset.ms){const id=t.dataset.ms;S[id]=[...document.querySelectorAll('[data-ms="'+id+'"]:checked')].map(x=>x.value);R();return}
+if(t.dataset.k){const[p,i]=t.dataset.k.split(".");if(i==null)S[p]=t.value;else S[p][+i]=t.value;R()}
+if(t.dataset.n&&db){const k=t.dataset.n,v=t.value===""?null:+t.value;try{await db.doc("m/"+k).update({r:{Lahore:{n:v}}})}catch(x){$("#st").textContent="Save failed: "+(x.message||x.code)}}});
+// ---------- upload ----------
+const nz=s=>String(s).toLowerCase().replace(/[^a-z0-9]/g,"");
+const fix=v=>typeof v=="number"?(v>1?v/100:v):null;
+const mk=v=>{const m=String(v).match(/([A-Za-z]{3})[a-z]*[-\s](\d{2,4})/);if(!m)return null;const i=MN.findIndex(x=>x.toLowerCase()==m[1].toLowerCase());return i<0?null:(m[2].length==2?"20"+m[2]:m[2])+"-"+String(i+1).padStart(2,"0")};
+const rows=(wb,pick)=>{const n=wb.SheetNames.find(pick)||wb.SheetNames[0];return XLSX.utils.sheet_to_json(wb.Sheets[n],{defval:null})};
+const regOf=s=>{s=String(s).toLowerCase();return s.includes("dha")?"DHA":s.includes("center")?"Center":s.includes("north")?"North":s.includes("south")?"South":null};
+const KC=["efficiency","ontime","online","pinaccuracy","hotspot","onsite25","pos","autoassign","outsource"];
+function kpi(rs,um,out){rs.forEach(x=>{const g=r=>{const c=Object.keys(x).find(h=>{const q=nz(h);return r=="onsite25"?q.includes("onsite")&&q.includes("25"):q.startsWith(r)});return c?x[c]:null};
+const mo=x.Month!=null?mk(x.Month):null,key=mo||um,reg=x["Sub-Region"]!=null?regOf(x["Sub-Region"]):"Lahore";if(!reg||!(x["Total Orders"]>0))return;
+const o=out[key]=out[key]||{r:{}};o.r[reg]=Object.assign(o.r[reg]||{},{k:KC.map(c=>fix(g(c))),o:x["Total Orders"]})})}
+async function rd(f,fn){return f?fn(XLSX.read(await f.arrayBuffer(),{type:"array"})):null}
+$("#rd").onclick=async()=>{const um=$("#uy").value+"-"+$("#umn").value,m=$("#pv");if(!$("#uy").value||!$("#umn").value){m.innerHTML='<p class="err">Choose the month first.</p>';return}
+if(!window.XLSX){m.innerHTML='<p class="err">Excel reader did not load. Check internet and retry.</p>';return}
+const out={};out[um]={r:{}};
+try{const f1=$("#f1").files[0],f2=$("#f2").files[0],f3=$("#f3").files[0];
+await rd(f1,wb=>{const a=rows(wb,n=>/overall/i.test(n)),b=rows(wb,n=>/sub/i.test(n));kpi(a,um,out);kpi(b,um,out)});
+await rd(f2,wb=>{const sn=wb.SheetNames.find(n=>/^sheet1$/i.test(n))||wb.SheetNames[wb.SheetNames.length-1],ar=XLSX.utils.sheet_to_json(wb.Sheets[sn],{header:1,defval:null});
+const M={"aftabkhan":"South","alihaider":"North","ayeshaakram":"Center","muhammadshahzad":"DHA","bluecarddepartment":"x"},c={South:0,North:0,Center:0,DHA:0,x:0};
+ar.forEach(r=>{const h=r.map(v=>M[nz(v)]).find(Boolean);if(h)c[h]++});const o=out[um];REG.slice(1).forEach(g=>(o.r[g]=o.r[g]||{}).t=c[g]);(o.r.Lahore=o.r.Lahore||{}).t=c.South+c.North+c.Center+c.DHA+c.x});
+await rd(f3,wb=>{const a=rows(wb,()=>1),o=out[um],c={South:0,North:0,Center:0,DHA:0},e={};
+a.forEach(x=>{const g=regOf(x.Center);if(g)c[g]++;const t=x["Error Type"];if(t)e[String(t).trim()]=(e[String(t).trim()]||0)+1});
+REG.slice(1).forEach(g=>(o.r[g]=o.r[g]||{}).p=c[g]);(o.r.Lahore=o.r.Lahore||{}).p=a.length;o.e=e})
+}catch(x){m.innerHTML='<p class="err">Could not read: '+(x.message||x)+"</p>";return}
+PEND=out;prev()};
+function prev(){const m=$("#pv");let h="<h2>Check, then save</h2>";
+Object.keys(PEND).sort().forEach(k=>{h+=`<h2>${lab(k)}</h2><div class="wrap"><table><tr><th>Region</th><th>Efficiency</th><th>Orders (file)</th><th>NOP (patients)</th><th>Pre-analytical</th><th>Non-technical</th></tr>`+REG.map(g=>{const d=PEND[k].r[g]||{};const ex=DB[k]&&DB[k].r&&DB[k].r[g]||{};
+const inp=(f)=>`<td><input type="number" data-p="${k}|${g}|${f}" value="${d[f]!=null?d[f]:""}" placeholder="${ex[f]!=null?ex[f]:""}"></td>`;
+return`<tr><td>${g}</td><td>${d.k?pc(d.k[0]):"–"}</td><td>${d.o||"–"}</td>${inp("n")}${inp("p")}${inp("t")}</tr>`}).join("")+"</table></div>"});
+h+=`<div class="row"><button class="btn" id="sv">Save to portal</button><span class="msg">Orders in the KPI file are not patients; type NOP yourself (blank keeps the old value).</span></div>`;m.innerHTML=h}
+document.addEventListener("input",e=>{const p=e.target.dataset.p;if(!p||!PEND)return;const[k,g,f]=p.split("|");const o=(PEND[k].r[g]=PEND[k].r[g]||{});o[f]=e.target.value===""?null:+e.target.value});
+document.addEventListener("click",async e=>{if(e.target.id!="sv"||!db||!PEND)return;e.target.disabled=true;
+try{for(const k of Object.keys(PEND)){const ref=db.doc("m/"+k),cur=(await ref.get()).data()||{l:lab(k),r:{}},n=PEND[k];
+const mg={l:lab(k),r:cur.r||{}};if(n.e||cur.e)mg.e=n.e||cur.e;
+REG.forEach(g=>{const a=mg.r[g]=Object.assign({},mg.r[g]);const b=n.r[g]||{};Object.keys(b).forEach(f=>{if(b[f]!=null)a[f]=b[f]})});
+await ref.set(mg)}
+$("#pv").innerHTML='<p class="msg">Saved. Open the Dashboard tab.</p>';PEND=null;S.gm=null}catch(x){$("#pv").insertAdjacentHTML("beforeend",'<p class="err">Save failed: '+(x.message||x.code)+"</p>");e.target.disabled=false}});
+async function csv(){const h=["Month","Region",...MET.map(m=>m[0]),"Orders","NOP","PreAnalytical","NonTechnical"],L=[h.join(",")];
+keys().forEach(k=>REG.forEach(g=>{const d=DB[k].r&&DB[k].r[g];if(d)L.push([lab(k),g,...MET.map((_,i)=>d.k&&d.k[i]!=null?(d.k[i]*100).toFixed(1):""),d.o==null?"":d.o,d.n==null?"":d.n,d.p==null?"":d.p,d.t==null?"":d.t].join(","))}));
+dlfile("home_sampling_data.csv",L.join("\n"),"text/csv")}
+// ---------- PPT ----------
+const GR="548235",RD="FF0000",NV="0B2265",FT="Times New Roman",lst=a=>a.map(lab).join(", ");
+const hdr=(P,s,t,sub)=>{s.background={color:"FFFFFF"};s.addShape(P.shapes.RECTANGLE,{x:0,y:0,w:10,h:.62,fill:{color:NV},line:{color:NV}});s.addText(t,{x:.25,y:.08,w:6.8,h:.45,fontFace:FT,fontSize:16,bold:true,color:"FFFFFF",margin:0});if(sub)s.addText(sub,{x:6.2,y:.08,w:3.6,h:.45,fontFace:FT,fontSize:9,color:"FFFFFF",align:"right",margin:0})};
+function bcard(P,s,i,n,vals,labs,t,nh){const w=2.36,x=.15+(i%4)*2.46,y=.75+Math.floor(i/4)*2.4,nn=vals.filter(v=>v!=null),last=nn.length?nn[nn.length-1]:null,c=last!=null&&last<t?RD:GR,tc=nh?"A6A6A6":c;
+s.addShape(P.shapes.RECTANGLE,{x,y,w,h:2.3,fill:{color:"FFFFFF"},line:{color:"A6A6A6",width:.75}});s.addShape(P.shapes.RECTANGLE,{x,y,w,h:.07,fill:{color:tc},line:{color:tc}});
+s.addText(n,{x:x+.1,y:y+.12,w:w-.2,h:.25,fontFace:FT,fontSize:10,bold:true,color:NV,margin:0});
+if(!nh)s.addText(pc(last),{x:x+.1,y:y+.38,w:w-.2,h:.4,fontFace:FT,fontSize:20,bold:true,color:c,margin:0});
+s.addText(t?"Target ≥ "+Math.round(t*100)+"%":"Target: -",{x:x+.1,y:y+.82,w:w-.2,h:.24,fontFace:FT,fontSize:8.5,align:"center",valign:"middle",line:{color:GR,width:.75},margin:0});
+s.addChart(P.charts.BAR,[{name:n,labels:labs,values:vals}],{x:x+.05,y:y+1.1,w:w-.1,h:1.16,barDir:"col",chartColors:vals.map(v=>v!=null&&v>=t?GR:RD),showValue:true,dataLabelFormatCode:"0.0%",dataLabelFontSize:8,dataLabelColor:"000000",dataLabelPosition:"outEnd",valAxisHidden:true,valGridLine:{style:"none"},catGridLine:{style:"none"},catAxisLabelFontSize:8,showLegend:false,valAxisMinVal:0,valAxisMaxVal:Math.max(...nn,t,.01)*1.2,barGapWidthPct:45})}
+function gslide(P,reg){const s=P.addSlide(),gk=S.gk.filter(Boolean).sort();s.background={color:NV};s.addText(`${reg} Home Sampling (${lst(gk)} overall)`,{x:.5,y:.15,w:9,h:.4,fontFace:FT,fontSize:16,bold:true,color:"FFFFFF",margin:0});
+GO.filter(i=>S.gt.includes(String(i))).forEach((i,j)=>{const v=avg(gk,reg,i),t=MET[i][1],c=v!=null&&v<t?RD:GR,cx=(j%5)*1.86+.4,y=j<5?.85:3.05;
+s.addText(MET[i][0],{x:cx,y,w:1.5,h:.35,fontFace:FT,fontSize:9,bold:true,color:"FFFFFF",align:"center",margin:0});
+if(v!=null){s.addChart(P.charts.DOUGHNUT,[{name:MET[i][0],labels:["Value","Rest"],values:[v,1-v]}],{x:cx,y:y+.35,w:1.5,h:1.5,holeSize:72,chartColors:[c,"FFFFFF"],showLegend:false,showValue:false,showPercent:false,showLabel:false,dataBorder:{pt:.5,color:NV}});
+s.addText(pc(v),{x:cx+.3,y:y+.9,w:.9,h:.4,fontFace:FT,fontSize:12,bold:true,color:"FFFFFF",align:"center",valign:"middle",margin:0})}})}
+function mslide(P,reg){const s=P.addSlide(),bm=S.bm.filter(Boolean).sort();hdr(P,s,reg+" Home Sampling",lst(bm));BO.filter(i=>S.mm.includes(String(i))).forEach((j0,j)=>bcard(P,s,j,MET[j0][0],bm.map(k=>val(k,reg,j0)),bm.map(lab),MET[j0][1]))}
+function cslide(P,reg){const s=P.addSlide(),QS=qy().filter(q=>S.cq.includes(q.id));hdr(P,s,reg+" Home Sampling - quarter comparison",QS.map(q=>q.n).join(", "));BO.filter(i=>S.ct.includes(String(i))).forEach((i,j)=>bcard(P,s,j,MET[i][0],QS.map(q=>avg(q.ks,reg,i)),QS.map(q=>q.n),MET[i][1]))}
+function rslide(P,rg){const s=P.addSlide(),k=S.rk.filter(Boolean).sort();hdr(P,s,"Region comparison",lst(k));BO.filter(i=>S.rt.includes(String(i))).forEach((i,j)=>bcard(P,s,j,MET[i][0],rg.map(g=>avg(k,g,i)),rg,MET[i][1],1))}
+function tslide(P,title,f,hd){const s=P.addSlide();hdr(P,s,title);const h=t=>({text:t,options:{bold:true,color:"FFFFFF",fill:{color:"1F3864"},align:"center"}}),rw=[[h("Month"),h("NOP"),h(hd),h("Ratio")]];
+keys().forEach(k=>{const d=DB[k].r&&DB[k].r.Lahore||{},c=d[f];if(c==null)return;rw.push([lab(k),d.n==null?"–":String(d.n),String(c),d.n?String(Math.floor(d.n/c)):"–"].map(t=>({text:t,options:{align:"center"}})))});
+s.addTable(rw,{x:1.5,y:.85,w:7,colW:[1.9,1.7,1.7,1.7],fontFace:FT,fontSize:Math.max(7,Math.min(12,Math.floor(280/rw.length))),border:{type:"solid",color:"A6A6A6",pt:.75}})}
+function dtab(P,title,head,rows){const s=P.addSlide();hdr(P,s,title);const h=t=>({text:String(t),options:{bold:true,color:"FFFFFF",fill:{color:"1F3864"},align:"center",fontSize:9}});
+s.addTable([head.map(h)].concat(rows.map(r=>r.map((t,i)=>({text:String(t),options:{align:i?"center":"left",fontSize:9}})))),{x:.3,y:.8,w:9.4,fontFace:FT,border:{type:"solid",color:"A6A6A6",pt:.5},rowH:.28})}
+function buildDeck(P,regs){P.layout="LAYOUT_16x9";const s=P.addSlide();s.background={color:NV};s.addText([{text:"Home Sampling Department",options:{bold:true,fontSize:30,breakLine:true}},{text:"Report Review - "+regs.join(", "),options:{fontSize:16}}],{x:1,y:1.8,w:8,h:1.6,fontFace:FT,color:"FFFFFF"});
+const V=vis(),gk=S.gk.filter(Boolean).sort(),bm=S.bm.filter(Boolean).sort(),ca=S.ca.filter(Boolean).sort(),cb=S.cb.filter(Boolean).sort(),rk=S.rk.filter(Boolean).sort(),na=gname(ca),nb=gname(cb),
+GF=GO.filter(i=>S.gt.includes(String(i))),BF=BO.filter(i=>S.mm.includes(String(i))),CF=BO.filter(i=>S.ct.includes(String(i)));
+regs.forEach(g=>{if(V.ov)gslide(P,g);if(V.mw)mslide(P,g);if(V.cp)cslide(P,g)});
+if(V.ov)dtab(P,"Overall data - "+lst(gk),["Metric",...regs],GF.map(i=>[MET[i][0],...regs.map(r=>pc(avg(gk,r,i)))]));
+if(V.mw)regs.forEach(r=>dtab(P,r+" - month-wise data",["Metric",...bm.map(lab)],BF.map(i=>[MET[i][0],...bm.map(k=>pc(val(k,r,i)))])));
+if(V.cp){const QS=qy().filter(q=>S.cq.includes(q.id));dtab(P,"Compare averages data (quarter-wise)",["Metric",...regs.flatMap(r=>QS.map(q=>r+" "+q.n))],CF.map(i=>[MET[i][0],...regs.flatMap(r=>QS.map(q=>pc(avg(q.ks,r,i))))]))}
+tslide(P,"Non- Tech Complaints","t","Complaints");tslide(P,"Pre- Analytical","p","Error Count")}
+const toast=t=>{const e=$("#tt");e.textContent=t;e.style.display=t?"block":"none"};
+async function mkppt(){if(typeof PptxGenJS=="undefined"){toast("PPT library missing in this page. Reload and retry.");return}
+const regs=REG.filter(g=>S.rg.includes(g));if(!regs.length){toast("Select at least one region first.");return}
+toast("Building PPT...");try{const P=new PptxGenJS();buildDeck(P,regs);const blob=await P.write({outputType:"blob",compression:true});dlfile("Home_Sampling_"+regs.join("-")+".pptx",blob);toast("PPT ready (see your downloads)");setTimeout(()=>toast(""),4000)}
+catch(x){toast("PPT failed: "+((x&&(x.message||x.code))||x))}}
+(()=>{const y=new Date().getFullYear();$("#uy").innerHTML='<option value="">Year</option>'+[y-1,y,y+1].map(v=>`<option>${v}</option>`).join("");$("#umn").innerHTML='<option value="">Month</option>'+MN.map((n,i)=>`<option value="${String(i+1).padStart(2,"0")}">${n}</option>`).join("")})();
+// ---------- load ----------
+const tm=0;
+function dlfile(name,data,mime){const b=data instanceof Blob?data:new Blob([data],{type:mime||"text/plain"});const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500)}
+let BASE={},EDITS={},BTS="";const LSK="hs_portal_v1";
+function persist(){try{localStorage.setItem(LSK,JSON.stringify({base:BTS,edits:EDITS}))}catch(x){}}
+function mergeDB(){DB=Object.assign({},BASE,EDITS);const n=Object.keys(EDITS).length;$("#st").textContent=n?n+" month(s) changed in this browser only. Tables tab: Download data.js and replace it on GitHub so everyone sees it.":(keys().length?"":"No data yet.")}
+function dmerge(t,s){Object.keys(s).forEach(k=>{if(s[k]&&typeof s[k]=="object"&&!Array.isArray(s[k])){t[k]=t[k]&&typeof t[k]=="object"?t[k]:{};dmerge(t[k],s[k])}else t[k]=s[k]})}
+db={doc(p){const k=p.split("/")[1];return{async get(){return{data:()=>DB[k]}},async set(d){EDITS[k]=d;persist();mergeDB();R()},async update(u){const c=JSON.parse(JSON.stringify(DB[k]||{l:lab(k),r:{}}));dmerge(c,u);EDITS[k]=c;persist();mergeDB();R()}}}};
+(function(){const J=window.HS_DATA||{docs:{}};BASE=J.docs||{};BTS=J.updated||"";let Lc=null;try{Lc=JSON.parse(localStorage.getItem(LSK)||"null")}catch(x){}
+if(Lc&&Lc.base==BTS)EDITS=Lc.edits||{};mergeDB();R()})();
+</script></body></html>
